@@ -1,10 +1,10 @@
 ﻿/**
- * CSWall 2
+ * CSWall 3
  * A program to periodically change desktop wallpaper using images from 500px.com
  * Author : s0ft
  * Contact : yciloplabolg@gmail.com
  * Blog : c0dew0rth.blogspot.com
- * Date/Time : 2017 April 27 - 3:53 PM
+ * Date/Time : 2017 April 28 - 10:28 PM
 **/
 
 using System;
@@ -41,9 +41,12 @@ namespace CSWall
         private static bool firstrun = true; //flag for timer (helps in deciding page numbers)
         private static string savepath; //currently saved image file path
         private string imagename; //currently saved image name
+        private string currentlyshowingwallpapername; //currently showing wallpaper name
+        private string currentlyshowingwallpaperpath; //currently shownig wallpaper storage location
         private System.Windows.Forms.NotifyIcon notifyicon;
         private object imagenamelock = new object(); //as an interthread lock token for controlling access to imagename and save file path
         private object filedownloaddeletelock = new object();
+        private object onethreadatatimelock = new object(); //for when the timer executes the same method in different threads
         #endregion
 
         public MainWindow()
@@ -53,11 +56,23 @@ namespace CSWall
 
         private void checkBoxTimerOn_Checked(object sender, RoutedEventArgs e)
         {
+            #region clear all existing temp images
+            try
+            {
+                foreach (string fpth in Directory.EnumerateFiles(Path.GetTempPath(), "*.jpeg"))
+                {
+                    File.Delete(fpth);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("Exception while deleting temp images\n" + ex.Message);
+            }
+            #endregion
             buttonChangeNow.IsEnabled = false;
             gathercheckedboxlist(); //gather what categories are checked
             firstrun = true; //reset the timer first run flag
             timer = new System.Threading.Timer(new System.Threading.TimerCallback(timermethod), null, 0, Convert.ToInt32(textBoxTimerInterval.Text) * 1000);
-
         }
 
         private async void timermethod(object obj)
@@ -132,35 +147,45 @@ namespace CSWall
                     return;
                 }
 
-                #region select a random image from the current page and set wallpaper
-                int randomindex = rnd.Next(0, imagesperpage);
-                lock (imagenamelock) //threadwise critical code below
+                lock (onethreadatatimelock)
                 {
-                    imagename = (string)jtoken["photos"][randomindex]["name"];
-                    savepath = Path.GetTempPath() + Convert.ToBase64String(Encoding.UTF8.GetBytes(imagename)) + ".jpeg";
-                }
-                string imgurl = (string)jtoken["photos"][randomindex]["images"][0]["url"];
-                await textBox.Dispatcher.BeginInvoke(new Action(() => { textBox.Text = imagename + "\n" + imgurl; }));
-                Debug.Print(imagename + "\n" + imgurl);
-
-                using (WebClient webcl = new WebClient())
-                {
-                    lock (filedownloaddeletelock) //critical code below
+                    #region select a random image from the current page and set wallpaper
+                    #region choose a random photo and ready its download URL
+                    int randomindex = rnd.Next(0, imagesperpage);
+                    lock (imagenamelock) //threadwise critical code below
                     {
-                        foreach (string fpth in Directory.EnumerateFiles(Path.GetTempPath(), "*.jpeg"))
-                        {
-                            File.Delete(fpth);
-                        }
-                        webcl.DownloadFile(imgurl, savepath);
-                        SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, savepath, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
+                        imagename = (string)jtoken["photos"][randomindex]["name"];
+                        savepath = Path.GetTempPath() + Convert.ToBase64String(Encoding.UTF8.GetBytes(imagename)) + ".jpeg";
                     }
-                }
-                #endregion
+                    string imgurl = (string)jtoken["photos"][randomindex]["images"][2]["url"];
+                    #endregion
+                    #region update textbox
+                    textBox.Dispatcher.BeginInvoke(new Action(() => { textBox.Text = "Coming up :\n" + imagename + "\n" + imgurl; }));
+                    #endregion
+                    #region download and set wallpaper
+                    using (WebClient webcl = new WebClient())
+                    {
+                        lock (filedownloaddeletelock) //critical code below
+                        {
+                            webcl.DownloadFile(imgurl, savepath);
+                            SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, savepath, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
+                            currentlyshowingwallpapername = imagename;
+                            currentlyshowingwallpaperpath = savepath;
+                        }
+                    }
+                    #endregion
+                    #region update textbox
+                    textBox.Dispatcher.BeginInvoke(new Action(() => { textBox.Text = imagename + "\n" + imgurl; }));
+                    Debug.Print(imagename + "\n" + imgurl);
+                    #endregion
 
+                    #endregion
+                }
             }
             catch (Exception ex)
             {
-                Debug.Print("Something went wrong.\n" + ex.Message + ex.Source);
+                Debug.Print("Something went wrong.\n" + ex.Message + "\n" + ex.Source);
+                await textBox.Dispatcher.BeginInvoke(new Action(() => { textBox.Text = "Something went wrong.\n" + ex.Message + "\n" + ex.Source; }));
             }
         }
 
@@ -212,14 +237,13 @@ namespace CSWall
             try
             {
                 string tmp = "";
-                lock (imagenamelock) //threadwise critical code
-                {
-                    if (!File.Exists(Directory.GetCurrentDirectory() + "\\" + processImageName(imagename) + ".jpeg"))
-                        tmp = Directory.GetCurrentDirectory() + "\\" + processImageName(imagename) + ".jpeg";
-                    else
-                        tmp = Directory.GetCurrentDirectory() + "\\" + processImageName(imagename) + "_" + DateTime.Now.Ticks + ".jpeg";
-                    File.Copy(savepath, tmp);
-                }
+
+                if (!File.Exists(Directory.GetCurrentDirectory() + "\\" + processImageName(currentlyshowingwallpapername) + ".jpeg"))
+                    tmp = Directory.GetCurrentDirectory() + "\\" + processImageName(currentlyshowingwallpapername) + ".jpeg";
+                else
+                    tmp = Directory.GetCurrentDirectory() + "\\" + processImageName(currentlyshowingwallpapername) + "_" + DateTime.Now.Ticks + ".jpeg";
+                File.Copy(currentlyshowingwallpaperpath, tmp);
+
                 #region update UI to show the saved message
                 new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(
                     delegate (object pth)
@@ -285,13 +309,15 @@ namespace CSWall
                 notifyicon = new System.Windows.Forms.NotifyIcon();
                 notifyicon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location);
                 notifyicon.Visible = true;
+
+
                 notifyicon.MouseMove += (somex, somey) =>
                 {
                     try
                     {
-                        if (imagename != null)
+                        if (currentlyshowingwallpapername != null)
                         {
-                            notifyicon.Text = "Current wallpaper image name is : \n" + imagename;
+                            notifyicon.Text = "Current wallpaper image name is : \n" + currentlyshowingwallpapername;
                         }
                         else
                         {
@@ -305,6 +331,8 @@ namespace CSWall
                         notifyicon.Text = "CSWall\nWallpaper name too long.";
                     }
                 };
+
+
                 notifyicon.DoubleClick += (somex, somey) =>
                 {
                     notifyicon.Dispose();

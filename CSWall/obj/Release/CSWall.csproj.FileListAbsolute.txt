@@ -1,0 +1,15 @@
+C:\Users\s0ft\Desktop\CSWall\CSWall\bin\Release\CSWall.exe.config
+C:\Users\s0ft\Desktop\CSWall\CSWall\bin\Release\CSWall.exe
+C:\Users\s0ft\Desktop\CSWall\CSWall\bin\Release\CSWall.pdb
+C:\Users\s0ft\Desktop\CSWall\CSWall\bin\Release\Newtonsoft.Json.dll
+C:\Users\s0ft\Desktop\CSWall\CSWall\bin\Release\Newtonsoft.Json.xml
+C:\Users\s0ft\Desktop\CSWall\CSWall\obj\Release\MainWindow.g.cs
+C:\Users\s0ft\Desktop\CSWall\CSWall\obj\Release\App.g.cs
+C:\Users\s0ft\Desktop\CSWall\CSWall\obj\Release\CSWall_MarkupCompile.cache
+C:\Users\s0ft\Desktop\CSWall\CSWall\obj\Release\CSWall_MarkupCompile.lref
+C:\Users\s0ft\Desktop\CSWall\CSWall\obj\Release\MainWindow.baml
+C:\Users\s0ft\Desktop\CSWall\CSWall\obj\Release\CSWall.g.resources
+C:\Users\s0ft\Desktop\CSWall\CSWall\obj\Release\CSWall.Properties.Resources.resources
+C:\Users\s0ft\Desktop\CSWall\CSWall\obj\Release\CSWall.csproj.GenerateResource.Cache
+C:\Users\s0ft\Desktop\CSWall\CSWall\obj\Release\CSWall.exe
+C:\Users\s0ft\Desktop\CSWall\CSWall\obj\Release\CSWall.pdb

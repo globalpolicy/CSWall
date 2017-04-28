@@ -1,0 +1,96 @@
+﻿<Window x:Class="CSWall.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CSWall"
+        mc:Ignorable="d"
+        Title="CSWall" Height="366" Width="571.5" StateChanged="Window_StateChanged" ResizeMode="CanMinimize" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Grid Height="299" VerticalAlignment="Top" Margin="10,10,10,0" RenderTransformOrigin="0.5,0.5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="165*"/>
+                <RowDefinition Height="134*"/>
+            </Grid.RowDefinitions>
+            <GroupBox x:Name="groupBox" Header="Category" Height="162" Margin="10,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="514" Opacity="0.88" Padding="0">
+                <GroupBox.Effect>
+                    <DropShadowEffect ShadowDepth="2" Opacity="0.86"/>
+                </GroupBox.Effect>
+                <Grid x:Name="gridofCheckboxes" Margin="8,10,-2,5" HorizontalAlignment="Left" Width="500">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20*"/>
+                        <RowDefinition Height="20*"/>
+                        <RowDefinition Height="20*"/>
+                        <RowDefinition Height="20*"/>
+                        <RowDefinition Height="20*"/>
+                        <RowDefinition Height="20*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="115*"/>
+                        <ColumnDefinition Width="79*"/>
+                        <ColumnDefinition Width="107*"/>
+                        <ColumnDefinition Width="93*"/>
+                        <ColumnDefinition Width="102*"/>
+
+                    </Grid.ColumnDefinitions>
+                    <CheckBox x:Name="checkBoxAbstract" Content="Abstract" HorizontalAlignment="Left" Margin="0,3,0,0" VerticalAlignment="Top" Height="15" Width="71" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxAnimals" Content="Animals" Grid.Column="1" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Height="15" Width="71" Grid.ColumnSpan="2" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxBW" Content="BlacknWhite" Grid.Column="2" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Height="15" Width="85" Tag="Black and White" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxCelebs" Content="Celebrities" Grid.Column="3" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Height="15" Width="75" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxCity" Content="Cities" Grid.Column="4" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Height="15" Width="71" Tag="City and Architecture" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxCommercial" Content="Commercial" HorizontalAlignment="Left" Margin="0,5,0,0" Grid.Row="1" VerticalAlignment="Top" Height="15" Width="83" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxConcert" Content="Concert" Grid.Column="1" HorizontalAlignment="Left" Margin="10,4,0,0" Grid.Row="1" VerticalAlignment="Top" Height="15" Width="71" Grid.ColumnSpan="2" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxFamily" Content="Family" Grid.Column="2" HorizontalAlignment="Left" Margin="10,4,0,0" Grid.Row="1" VerticalAlignment="Top" Height="15" Width="71" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxFashion" Content="Fashion" Grid.Column="3" HorizontalAlignment="Left" Margin="10,4,0,0" Grid.Row="1" VerticalAlignment="Top" Height="15" Width="71" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxFilm" Content="Film" Grid.Column="4" HorizontalAlignment="Left" Margin="10,4,0,0" Grid.Row="1" VerticalAlignment="Top" Height="15" Width="71" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxFineArt" Content="Fine Art" HorizontalAlignment="Left" Margin="0,5,0,0" Grid.Row="2" VerticalAlignment="Top" Height="15" Width="71" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxFood" Content="Food" Grid.Column="1" HorizontalAlignment="Left" Margin="10,4,0,0" Grid.Row="2" VerticalAlignment="Top" Height="15" Width="71" Grid.ColumnSpan="2" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxJournalism" Content="Journalism" Grid.Column="2" HorizontalAlignment="Left" Margin="10,4,0,0" Grid.Row="2" VerticalAlignment="Top" Height="15" Width="76" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxLandscapes" Content="Landscapes" Grid.Column="3" HorizontalAlignment="Left" Margin="10,4,0,0" Grid.Row="2" VerticalAlignment="Top" Height="15" Width="81" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxMacro" Content="Macro" Grid.Column="4" HorizontalAlignment="Left" Margin="10,4,0,0" Grid.Row="2" VerticalAlignment="Top" Height="15" Width="71" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxNature" Content="Nature" HorizontalAlignment="Left" Margin="0,5,0,0" Grid.Row="3" VerticalAlignment="Top" Height="15" Width="71" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxNude" Content="Nude" Grid.Column="1" HorizontalAlignment="Left" Margin="10,4,0,0" Grid.Row="3" VerticalAlignment="Top" Height="15" Width="71" Grid.ColumnSpan="2" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxPeople" Content="People" Grid.Column="2" HorizontalAlignment="Left" Margin="10,4,0,0" Grid.Row="3" VerticalAlignment="Top" Height="15" Width="71" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxPerformingArt" Content="Performance" Grid.Column="3" HorizontalAlignment="Left" Margin="10,4,0,0" Grid.Row="3" VerticalAlignment="Top" Height="15" Width="87" Grid.ColumnSpan="2" Tag="Performing Arts" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxSports" Content="Sport" Grid.Column="4" HorizontalAlignment="Left" Margin="10,4,0,0" Grid.Row="3" VerticalAlignment="Top" Height="15" Width="71" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxStillLife" Content="Still Life" HorizontalAlignment="Left" Margin="0,4,0,0" Grid.Row="4" VerticalAlignment="Top" Height="15" Width="71" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxStreet" Content="Street" Grid.Column="1" HorizontalAlignment="Left" Margin="10,4,0,0" Grid.Row="4" VerticalAlignment="Top" Height="15" Width="71" Grid.ColumnSpan="2" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxTransportation" Content="Transportation" Grid.Column="2" HorizontalAlignment="Left" Margin="10,4,0,0" Grid.Row="4" VerticalAlignment="Top" Height="15" Opacity="0.91" Width="97"/>
+                    <CheckBox x:Name="checkBoxTravel" Content="Travel" Grid.Column="3" HorizontalAlignment="Left" Margin="10,4,0,0" Grid.Row="4" VerticalAlignment="Top" Height="15" Width="71" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxUnderwater" Content="Underwater" Grid.Column="4" HorizontalAlignment="Left" Margin="10,4,0,0" Grid.Row="4" VerticalAlignment="Top" Height="15" Width="82" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxUrbanExploration" Content="Urban Exploration" HorizontalAlignment="Left" Margin="0,4,0,0" Grid.Row="5" VerticalAlignment="Top" Height="15" Width="115" Opacity="0.91"/>
+                    <CheckBox x:Name="checkBoxWedding" Content="Wedding" Grid.Column="1" HorizontalAlignment="Left" Margin="10,4,0,0" Grid.Row="5" VerticalAlignment="Top" Height="15" Width="71" Grid.ColumnSpan="2" Opacity="0.91"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox x:Name="groupBox1" Header="Control" HorizontalAlignment="Left" Margin="10,2,0,0" Grid.Row="1" Width="514" Opacity="0.9">
+                <GroupBox.Effect>
+                    <DropShadowEffect Opacity="0.775" ShadowDepth="2"/>
+                </GroupBox.Effect>
+                <Grid Margin="10,10,-2,-12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="73*"/>
+                        <ColumnDefinition Width="174*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20*"/>
+                        <RowDefinition Height="23*"/>
+                        <RowDefinition Height="35*"/>
+                    </Grid.RowDefinitions>
+                    <CheckBox x:Name="checkBoxTimerOn" Content="Timer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="52" Checked="checkBoxTimerOn_Checked" Unchecked="checkBoxTimerOn_Unchecked" Margin="0,-4,0,0" Opacity="0.9" ToolTip="Toggle timer"/>
+                    <TextBox x:Name="textBoxTimerInterval" HorizontalAlignment="Left" TextWrapping="Wrap" Text="60" VerticalAlignment="Top" Width="70" Opacity="0.845" Margin="57,-6,0,0" ToolTip="Interval in seconds between wallpaper changes"/>
+                    <Button x:Name="buttonChangeNow" Content="Change" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" Click="buttonChangeNow_Click" Opacity="0.825" Margin="0,19,0,0" Grid.RowSpan="2"/>
+                    <TextBox x:Name="textBox" Grid.Column="1" HorizontalAlignment="Left" Height="74" Grid.RowSpan="3" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="338" Opacity="0.695" Margin="0,-6,0,0"/>
+                    <Button x:Name="buttonSave" Content="Save Image" HorizontalAlignment="Left" Height="20" Grid.Row="1" VerticalAlignment="Top" Width="128" Opacity="0.8" Click="buttonSave_Click" Margin="0,19,0,0" Grid.RowSpan="2"/>
+                    <Button x:Name="buttonAbout" Grid.ColumnSpan="2" Content="About" HorizontalAlignment="Left" Height="22" Margin="0,14,0,0" Grid.Row="2" VerticalAlignment="Top" Width="484" Opacity="0.53" Click="buttonAbout_Click"/>
+                </Grid>
+            </GroupBox>
+        </Grid>
+        <CheckBox x:Name="checkBoxSelectAll" Content="SelectAll" HorizontalAlignment="Left" Height="15" Margin="441,144,0,0" VerticalAlignment="Top" Width="78" Opacity="0.855" Checked="checkBoxSelectAll_Checked" Unchecked="checkBoxSelectAll_Unchecked">
+            <CheckBox.Effect>
+                <DropShadowEffect ShadowDepth="2" Opacity="0.875"/>
+            </CheckBox.Effect>
+        </CheckBox>
+
+    </Grid>
+</Window>

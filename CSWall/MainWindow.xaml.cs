@@ -1,10 +1,10 @@
 ﻿/**
- * CSWall 3
+ * CSWall 3.1
  * A program to periodically change desktop wallpaper using images from 500px.com
  * Author : s0ft
  * Contact : yciloplabolg@gmail.com
  * Blog : c0dew0rth.blogspot.com
- * Date/Time : 2017 April 28 - 10:28 PM
+ * Date/Time : 2017 May 3 - 7:05 PM
 **/
 
 using System;
@@ -158,6 +158,8 @@ namespace CSWall
                         savepath = Path.GetTempPath() + Convert.ToBase64String(Encoding.UTF8.GetBytes(imagename)) + ".jpeg";
                     }
                     string imgurl = (string)jtoken["photos"][randomindex]["images"][2]["url"];
+                    if(imgurl.IndexOf("https://")!=-1)
+                        imgurl = imgurl.Replace("https://", "http://"); //for avoiding https (this line was added from v3->v3.1 because of a "The request was aborted: Could not create SSL/TLS secure channel." exception while downloading through https url, funny since it worked before, the reason for the update being this issue)
                     #endregion
                     #region update textbox
                     textBox.Dispatcher.BeginInvoke(new Action(() => { textBox.Text = "Coming up :\n" + imagename + "\n" + imgurl; }));
